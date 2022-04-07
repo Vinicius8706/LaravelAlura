@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+
 class SeriesController extends Controller
 {
-  function listarSeries()
+  public function index(Request $request)
   {
+    echo $request->query('parametro');
+    exit();
     $series = [
       'Greys Anatomy', 'Lost', 'Agents of SHIELD'
     ];
