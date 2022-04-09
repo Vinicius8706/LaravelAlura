@@ -3,7 +3,6 @@
     Adicionar série
 @endsection
 @section('conteudo')
-    Adicionar série
 
     <form method='post'>
         @csrf
