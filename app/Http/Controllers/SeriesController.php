@@ -11,7 +11,7 @@ class SeriesController extends Controller
   public function index(Request $request)
   {
     $series = Serie::query()->orderBy('nome')->get();
-    $mensagem = $request ->session()->get('mensagem');
+    $mensagem = $request->session()->get('mensagem');
 
     return view('series.index', compact('series'));
   }
@@ -23,17 +23,19 @@ class SeriesController extends Controller
 
   public function store(Request $request)
   {
+    $request->validate([
+      'nome' => 'required'
+    ]);
     $serie = Serie::create($request->all());
-    $request->session()->flash('mensagem',"Serie {$serie->id} criada com sucesso {$serie->nome}");
+    $request->session()->flash('mensagem', "Serie {$serie->id} criada com sucesso {$serie->nome}");
 
     return redirect()->route('listar_series'); //redirecionamento da funcao helper que realiza o redirecionamento
   }
 
-    public function destroy(Request $request)
-    {
-        Serie::destroy($request->id);
+  public function destroy(Request $request)
+  {
+    Serie::destroy($request->id);
     $request->session()->flash('Serie removida com sucesso');
     return redirect()->route('listar_series');
-
   }
 }
