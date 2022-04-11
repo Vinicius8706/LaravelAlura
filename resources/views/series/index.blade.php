@@ -14,7 +14,7 @@
          @foreach ($series as $serie)
              <li class="list-group-item d-flex justify-content-between align-items-center">{{ $serie->nome }}
                  <span class="d-flex">
-                     <a href="/series/{{$serie->id}}/temporadas" class="btn btn-info btn-sm">
+                     <a href="/series/{{$serie->id}}/temporadas" class="btn btn-info btn-sm mr-2">
                          <i class="fas fa-external-link-alt"></i>
                      </a>
                      <form method="post" action="/series/remover/{{ addslashes($serie->id) }}"
