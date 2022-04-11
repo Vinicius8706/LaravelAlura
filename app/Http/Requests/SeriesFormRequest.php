@@ -23,9 +23,11 @@ class SeriesFormRequest extends FormRequest
      */
     public function rules()
     {
-        [
+        $rules = [
             'nome' => 'required|min:3'
         ];
+        return $rules;
+
     }
 
     public function messages(){
