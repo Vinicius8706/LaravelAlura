@@ -24,7 +24,8 @@ class SeriesFormRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'nome' => 'required|min:3'
+            'nome' => 'required|min:3',
+            'qtd_temporadas' => 'required|integer'
         ];
         return $rules;
 
@@ -33,7 +34,8 @@ class SeriesFormRequest extends FormRequest
     public function messages(){
         return [
             'required' =>"O campo :attribute é obrigatório",
-            'nome.min'=> 'O campo nome precisa ter pelo 2 caracteres'
+            'nome.min'=> 'O campo    nome precisa ter pelo 2 caracteres',
+            'qtd_temporadas' => 'Informe o número de temporadas'
         ];
     }
 }
