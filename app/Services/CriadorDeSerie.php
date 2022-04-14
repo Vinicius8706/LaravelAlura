@@ -7,41 +7,40 @@ use Illuminate\Support\Facades\DB;
 
 class CriadorDeSerie
 {
-  public function criarSerie(string $nomeSerie, int $qtdTemporadas, int $ep_por_temporada): Serie
-  {
-      $serie = null;
-      DB::transaction(function ()use($nomeSerie,$qtdTemporadas,$ep_por_temporada){
-          $serie=Serie::create(['nome'=>$nomeSerie]);
-          $this->criaTemporadas($qtdTemporadas,$ep_por_temporada,$serie);
-      });
+    public function criarSerie(
+        string $nomeSerie,
+        int $qtdTemporadas,
+        int $epPorTemporada
+    ): Serie {
+        DB::beginTransaction();
+        $serie = Serie::create(['nome' => $nomeSerie]);
+        $this->criaTemporadas($qtdTemporadas, $epPorTemporada, $serie);
+        DB::commit();
 
-    $serie = Serie::create(['nome' => $nomeSerie]);
-      $this->criaTemporadas($qtdTemporadas, $serie, $ep_por_temporada);
-      return $serie;
-  }
+        return $serie;
+    }
 
     /**
      * @param int $qtdTemporadas
+     * @param int $epPorTemporada
      * @param $serie
-     * @param int $ep_por_temporada
-     * @return void
      */
-    public function criaTemporadas(int $qtdTemporadas, $serie, int $ep_por_temporada): void
+    private function criaTemporadas(int $qtdTemporadas, int $epPorTemporada, Serie $serie): void
     {
         for ($i = 1; $i <= $qtdTemporadas; $i++) {
             $temporada = $serie->temporadas()->create(['numero' => $i]);
-            $this->criaEpisodios($ep_por_temporada, $temporada);
+
+            $this->criaEpisodios($epPorTemporada, $temporada);
         }
     }
 
     /**
-     * @param int $ep_por_temporada
-     * @param mixed $temporada
-     * @return void
+     * @param int $epPorTemporada
+     * @param \Illuminate\Database\Eloquent\Model $temporada
      */
-    public function criaEpisodios(int $ep_por_temporada, mixed $temporada): void
+    private function criaEpisodios(int $epPorTemporada, \Illuminate\Database\Eloquent\Model $temporada): void
     {
-        for ($j = 1; $j <= $ep_por_temporada; $j++) {
+        for ($j = 1; $j <= $epPorTemporada; $j++) {
             $temporada->episodios()->create(['numero' => $j]);
         }
     }
