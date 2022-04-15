@@ -59,8 +59,20 @@
              }
          }
 
-         function editarSerie(){
-             document.querySelector(`input-nome-serie-${seriedId} > input`)
+         function editarSerie(seriedId) {
+             let formData = new ForrmData()
+             const nome = document.querySelector(`input-nome-serie-${seriedId} > input`).value
+             const token = document.querySelector('input[name="_token"]').value
+             formData.append('nome' => nome);
+             formData.append('_token', token);
+             const url = `/series/${seriedId}/editaNome`
+             fetch(url) {
+                 body: formData,
+                 method: 'POST'
+             }).then(() => {
+             toggleInput(serieId);
+             document.getElementById(`nome-serie-${seriedId}`).textContent = nome;
+         });
          }
      </script>
  @endsection

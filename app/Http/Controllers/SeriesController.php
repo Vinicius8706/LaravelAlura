@@ -12,7 +12,8 @@ use Illuminate\Http\Request;
 
 class SeriesController extends Controller
 {
-    public function index(Request $request) {
+    public function index(Request $request)
+    {
         $series = Serie::query()
             ->orderBy('nome')
             ->get();
@@ -54,5 +55,13 @@ class SeriesController extends Controller
                 "Série $nomeSerie removida com sucesso"
             );
         return redirect()->route('listar_series');
+    }
+
+    public function editaNome(Request $request)
+    {
+        $novoNome = $request->nome;
+        $serie = Serie::find($request->id);
+        $serie->nome = $novoNome;
+        $serie->save();
     }
 }
