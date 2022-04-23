@@ -11,6 +11,7 @@
         
                 </a>
                 <span class="badge badge-secondary">
+                    {{$temporada->getEpisodiosAssistidos->count()}}/
                     {{$temporada->episodios->count()}}
                 </span>
             </li>
